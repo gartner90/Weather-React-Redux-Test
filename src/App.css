@@ -1,0 +1,175 @@
+:root {
+    --orange-color: #32afa9;    
+}
+
+.rd-side-left {
+  background-color: #333;
+  color: #fff;
+  height: 100vh;
+  border-right: solid var(--orange-color) 4px;
+  position: relative;
+}
+
+.rd-posts-content {
+  overflow-y: scroll;
+  height: calc(100vh - 70px);
+}
+
+.rd-card-content {
+  position: relative;
+  transition: all 0s;
+  opacity: 1;
+  max-height: 500px;
+}
+
+.rd-card {
+  position: relative;
+  background-color: #5d5a5a;
+  padding: 30px 30px 20px;
+  margin: 13px 0;
+  border-radius: 10px;
+  width: 98%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+  .rd-card-bg {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    transition: all .5s ease;
+  }
+
+    .rd-card:hover .rd-card-bg,
+    .rd-card.active .rd-card-bg {
+      opacity: 1;
+    }
+
+  .rd-card-name {
+    position: relative;
+  }
+
+  .rd-card.active {
+    border: solid 2px var(--orange-color);
+  }
+
+  .rd-card h2 {
+    font-weight: 100;
+    text-shadow: 0 0 10px #000;
+    margin: 0;
+    font-size: 25px;
+  }
+
+  .rd-card-comments {
+  margin-top: 7px;
+  font-size: 12px;
+  }
+
+
+.rd-card-temp {
+    float: right;
+    margin-top: -14px;
+    background-color: #0000004a;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+  .rd-card-temp-int {
+      font-size: 34px;
+      font-weight: 100;
+  }
+
+  .rd-card-temp-icon img {
+    vertical-align: -17px;
+  }
+
+.rd-days-item {
+  width: 19.6%;
+  display: inline-block;
+  background-color: var(--orange-color);
+  color: white;
+  padding: 20px;
+  margin: .2%;
+  text-align: center;
+  vertical-align: top;
+}
+
+.rd-city-filter {
+  margin-top: 12px;
+}
+
+
+@media screen and (max-width: 1090px) {
+  .rd-card-name {
+    text-align: center;
+  }
+
+  .rd-card h2 {
+    font-size: 18px;
+  }
+
+  .rd-card-temp-int {
+    font-size: 19px;
+  }
+
+  .rd-card-temp {
+    padding: 0;
+    margin-bottom: 10px;
+    float: none;
+  }
+
+  .rd-days-item {
+    padding: 10px;
+  }
+
+  .rd-days-item h4 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rd-detail-image {
+    max-width: 100%;
+  }
+
+  .rd-side-left {
+    height: 210px;
+    border-bottom: solid var(--orange-color) 4px;
+    border-right: 0;
+    padding-top: 18px;
+  }
+
+  .rd-card-content {
+    width: 210px;
+    flex-wrap:  nowrap;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 15px;
+  }
+
+  .rd-posts-content {
+    overflow: auto;
+    white-space: nowrap;
+    height: auto;
+  }
+
+  .rd-days-item {
+    width: 49.6%;
+  }
+
+  .rd-days-item h4 {
+    font-size: 26px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .rd-days-item {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
