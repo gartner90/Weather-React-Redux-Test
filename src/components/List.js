@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../components/Card';
-import cities from '../services/cities.json'
+import cities from '../services/cities.json';
 
 class List extends Component {
 
@@ -23,14 +23,11 @@ class List extends Component {
   }
 
   render() {
-    const { setItem, selected } = this.props;
     const { cities } = this.state
 
     const Cities = cities.map((item, i) => (
       <Card
         item={item}
-        setItem={setItem}
-        selected={selected}
         key={i}
       />
     ));

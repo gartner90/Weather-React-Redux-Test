@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { getDetail } from '../services/api'
+import { getDetail, defaultCountry } from '../services/api';
+import { getCountry } from '../services/actionCreators';
+import { connect} from 'react-redux';
+import store from '../services/store';
 
 class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: defaultCountry,
       iconSrc: '',
       detail: {},
     };
@@ -15,20 +19,25 @@ class Post extends Component {
         detail: response.data,
       });
     });
+
+    store.subscribe(() => {
+      const id = parseInt(store.getState().id, 0);
+      this.setState({id});
+    });
   }
 
   render() {
-    const { item, setItem, selected } = this.props;
+    const { item, setItem } = this.props;
     const bgImage = `url(img/${item.id}.jpg)`;
-    const { iconSrc, detail } = this.state;
+    const { iconSrc, detail, id } = this.state;
 
     return (
       <div 
         className={`rd-card-content ${item.hide ? 'rd-card-hide' : ''}`}
       >
         <article
-          className={`rd-card ${selected === item.id ? 'active' : ''}`}
-          onClick={(num) => setItem(item.id)}
+          className={`rd-card ${item.id === id ? 'active' : ''}`}
+          onClick={() => setItem(item.id)}
         >
           <div className="rd-card-bg" style={{backgroundImage: bgImage}}/>
           <div className="rd-card-name">
@@ -50,4 +59,19 @@ class Post extends Component {
   }
 }
 
-export default Post;
+const mapStateToProps = state => {
+  return {
+    id: state.id
+  }
+}
+
+const mapdispatchToProps = (dispatch) => {
+  return {
+    setItem(id) {
+      localStorage.setItem('rd-weather', id);
+      dispatch(getCountry(id));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapdispatchToProps)(Post);

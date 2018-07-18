@@ -1,42 +1,39 @@
 import React, { Component } from 'react';
-import { getForecast } from '../services/api';
 import Moment from 'moment';
+import store from '../services/store';
+import { getCountry } from '../services/actionCreators';
+import { getForecast, separateDays, defaultCountry } from '../services/api';
 
 class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: {city:{id:0}},
+      item: {city: { id: defaultCountry}},
       days: [],
     };
-    this.getData();
-  }
 
-  componentDidUpdate() {
-    this.getData();
-  }
+    const storageID = localStorage.getItem('rd-weather');
 
-  getData() {
-    if (this.props.id !== this.state.item.city.id) {
-      getForecast(this.props.id).then(response => {
-        let datesInjected = [];
-        let forecast = [];
-
-        response.data.list.forEach((obj) => {
-          const date = obj.dt_txt.split(' ')[0];
-
-          if (datesInjected.indexOf(date) < 0) {
-            forecast.push(obj);
-            datesInjected.push(date);
-          }
-        });
-
-        this.setState({
-          item: response.data,
-          days: forecast,
-        });
-      });
+    if (storageID) {
+      this.getForecastObj(storageID);
+      store.dispatch(getCountry(storageID));
     }
+
+    store.subscribe(() => {
+      const id = store.getState().id;
+      this.getForecastObj(id)
+    });
+
+    this.getForecastObj(defaultCountry);
+  }
+
+  getForecastObj(id) {
+    getForecast(id).then(response => {
+      this.setState({
+        item: response.data,
+        days: separateDays(response.data.list),
+      });
+    });
   }
 
   render() {
